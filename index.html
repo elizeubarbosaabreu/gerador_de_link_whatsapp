@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gerador de Link para WhatsApp</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 0;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .banner {
+      background-color: #25D366;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .banner a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #25D366;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 1rem;
+    }
+
+    #link {
+      margin-top: 20px;
+      padding: 10px;
+      background: #e0ffe0;
+      word-break: break-word;
+    }
+
+    button {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1ebd5a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="banner">
+    📖 Acesse o blog: <a href="https://sofagospel.blogspot.com" target="_blank">sofagospel.blogspot.com</a>
+  </div>
+
+  <div class="container">
+    <h1>Gerador de Link para WhatsApp</h1>
+
+    <label for="numero">Número (com DDI, ex: 5511912345678):</label>
+    <input type="text" id="numero" placeholder="Digite o número completo">
+
+    <label for="mensagem">Mensagem:</label>
+    <textarea id="mensagem" rows="4" placeholder="Digite a mensagem..."></textarea>
+
+    <button onclick="gerarLink()">Gerar Link</button>
+
+    <div id="link"></div>
+  </div>
+
+  <script>
+    function gerarLink() {
+      const numero = document.getElementById("numero").value.trim();
+      const mensagem = document.getElementById("mensagem").value.trim();
+      if (!numero) {
+        alert("Por favor, insira o número.");
+        return;
+      }
+      const mensagemCodificada = encodeURIComponent(mensagem);
+      const link = `https://wa.me/${numero}?text=${mensagemCodificada}`;
+      const resultado = `
+        <p><strong>Link gerado:</strong></p>
+        <input type="text" id="linkFinal" value="${link}" readonly>
+        <button onclick="copiarLink()">Copiar Link</button>
+      `;
+      document.getElementById("link").innerHTML = resultado;
+    }
+
+    function copiarLink() {
+      const input = document.getElementById("linkFinal");
+      input.select();
+      input.setSelectionRange(0, 99999); // Compatibilidade com mobile
+      document.execCommand("copy");
+      alert("Link copiado para a área de transferência!");
+    }
+  </script>
+
+</body>
+</html>
